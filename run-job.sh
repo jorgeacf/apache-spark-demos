@@ -2,15 +2,29 @@
 
 mvn clean package -DskipTests
 
-docker cp target/spark-1.0-SNAPSHOT-jar-with-dependencies.jar chaos-YARN:/
+docker cp target/spark-1.0-SNAPSHOT-jar-with-dependencies.jar jfdocker-YARN:/
 
-docker exec chaos-YARN \
+docker cp input/text.txt jfdocker-YARN:/
+
+docker exec jfdocker-YARN hdfs dfs -put text.txt /user/root
+
+docker exec jfdocker-YARN \
     spark-submit \
     --conf spark.driver.allowMultipleContexts=true \
-    --class com.jorgefigueiredo.SparkListenerApplication \
+    --class com.jorgefigueiredo.WordCountApplication \
     --master yarn-cluster \
     --driver-memory 1g \
     --num-executors 4 \
     --executor-memory 1g \
     --executor-cores 1 \
     spark-1.0-SNAPSHOT-jar-with-dependencies.jar
+
+docker exec jfdocker-YARN hdfs dfs -get /user/root/result
+
+docker exec jfdocker-YARN hdfs dfs -rm -r /user/root/result
+
+sudo rm -r -f output
+
+sudo mkdir output
+
+sudo docker cp jfdocker-YARN:/result/. output
