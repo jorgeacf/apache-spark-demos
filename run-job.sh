@@ -30,3 +30,6 @@ sudo rm -r -f output
 sudo mkdir output
 
 sudo docker cp jfdocker-YARN:/result/. output
+
+sudo chown -R jorgeacf output
+sudo chown -R jorgeacf:jorgeacf output

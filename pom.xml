@@ -13,8 +13,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <scala.binary.version>2.10</scala.binary.version>
-        <spark.core.version>1.6.1</spark.core.version>
-        <scala.version>2.10.4</scala.version>
+        <spark.core.version>1.6.0</spark.core.version>
+        <scala.version>2.10.6</scala.version>
         <junit.version>4.12</junit.version>
         <scalatest.version>2.2.6</scalatest.version>
     </properties>

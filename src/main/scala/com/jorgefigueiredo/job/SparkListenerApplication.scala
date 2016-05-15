@@ -1,4 +1,4 @@
-package com.jorgefigueiredo
+package com.jorgefigueiredo.job
 
 import org.apache.spark.scheduler._
 import org.apache.spark.{SparkConf, SparkContext}

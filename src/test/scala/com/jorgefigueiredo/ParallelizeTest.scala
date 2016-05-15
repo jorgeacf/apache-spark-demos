@@ -1,4 +1,4 @@
-package com.jorgefigueiredo.parallelize
+package com.jorgefigueiredo
 
 import org.apache.spark.scheduler.SparkListener
 import org.apache.spark.{SparkConf, SparkContext}
