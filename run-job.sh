@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
 
+echo "========================================"
+echo "====== Spark Job Runner on Docker ======"
+echo "========================================"
+echo ""
+echo ""
+if [ -z "$1" ]
+then
+    echo "Missing SparkJob class name as first parameter"
+    echo ""
+    exit
+fi
+
 mvn clean package -DskipTests
 
 docker cp target/spark-1.0-SNAPSHOT-jar-with-dependencies.jar jfdocker-YARN:/
@@ -11,7 +23,7 @@ docker exec jfdocker-YARN hdfs dfs -put input/text.txt /user/root
 docker exec jfdocker-YARN \
     spark-submit \
     --conf spark.driver.allowMultipleContexts=true \
-    --class com.jorgefigueiredo.WordCountApplication \
+    --class $1 \
     --master yarn-cluster \
     --driver-memory 1g \
     --num-executors 4 \
