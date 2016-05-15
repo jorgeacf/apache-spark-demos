@@ -4,9 +4,9 @@ mvn clean package -DskipTests
 
 docker cp target/spark-1.0-SNAPSHOT-jar-with-dependencies.jar jfdocker-YARN:/
 
-docker cp input/text.txt jfdocker-YARN:/
+docker cp input/. jfdocker-YARN:/input
 
-docker exec jfdocker-YARN hdfs dfs -put text.txt /user/root
+docker exec jfdocker-YARN hdfs dfs -put input/text.txt /user/root
 
 docker exec jfdocker-YARN \
     spark-submit \
@@ -18,6 +18,8 @@ docker exec jfdocker-YARN \
     --executor-memory 1g \
     --executor-cores 1 \
     spark-1.0-SNAPSHOT-jar-with-dependencies.jar
+
+docker exec jfdocker-YARN rm -r -f result
 
 docker exec jfdocker-YARN hdfs dfs -get /user/root/result
 
