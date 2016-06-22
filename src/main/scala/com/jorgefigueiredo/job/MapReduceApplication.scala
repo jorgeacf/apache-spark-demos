@@ -10,6 +10,7 @@ object MapReduceApplication {
     val numberOfItems = 10
     val numberOfPartitions = 2
     val input = ItemListFactory.get(numberOfItems, numberOfPartitions)
+    println(input)
     val items = sparkContext.parallelize(input, numberOfPartitions)
     //val sorted = items.sortBy(a => a.id, true)
     //sorted.foreach(item => println(item))

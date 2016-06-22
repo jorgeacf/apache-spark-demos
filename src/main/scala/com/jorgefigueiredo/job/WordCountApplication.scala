@@ -8,9 +8,11 @@ object WordCountApplication {
 
     val sparkConf = new SparkConf()
     sparkConf.setAppName("WordCountApplication")
+    sparkConf.setMaster("local[*]")
+    sparkConf.set("spark.ui.showConsoleProgress", "false")
     val sparkContext = new SparkContext(sparkConf)
 
-    val textFile = sparkContext.textFile("text.txt")
+    val textFile = sparkContext.textFile("input/text.txt")
     val counts = textFile
       .flatMap(line => line.split(" "))
       .map(word => (word, 1))
@@ -18,7 +20,7 @@ object WordCountApplication {
       .sortByKey(true)
       //.filter(item => item._1.contains("a"))
 
-    counts.saveAsTextFile("result")
+    counts.saveAsTextFile("output")
 
   }
 

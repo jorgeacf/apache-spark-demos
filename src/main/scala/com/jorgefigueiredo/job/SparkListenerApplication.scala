@@ -9,7 +9,8 @@ object SparkListenerApplication {
 
     val sparkConf = new SparkConf()
     sparkConf.setAppName("SparkJob")
-    // sparkConf.setMaster("local[*]")
+    sparkConf.setMaster("local[*]")
+    sparkConf.set("spark.ui.showConsoleProgress", "false")
 
     val sparkContext = new SparkContext(sparkConf)
     setSparkListener(sparkContext)
