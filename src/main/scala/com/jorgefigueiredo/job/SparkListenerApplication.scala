@@ -1,5 +1,6 @@
 package com.jorgefigueiredo.job
 
+import com.jorgefigueiredo.SparkContextFactory
 import org.apache.spark.scheduler._
 import org.apache.spark.{SparkConf, SparkContext}
 
@@ -7,18 +8,13 @@ object SparkListenerApplication {
 
   def main(args: Array[String]) {
 
-    val sparkConf = new SparkConf()
-    sparkConf.setAppName("SparkJob")
-    sparkConf.setMaster("local[*]")
-    sparkConf.set("spark.ui.showConsoleProgress", "false")
+    val sparkContext = SparkContextFactory.getLocalContext()
 
-    val sparkContext = new SparkContext(sparkConf)
     setSparkListener(sparkContext)
     val items = sparkContext.parallelize(1 to 100, 2)
     val result = items.count()
 
     println(result)
-
   }
 
   def setSparkListener(sparkContext: SparkContext) = {

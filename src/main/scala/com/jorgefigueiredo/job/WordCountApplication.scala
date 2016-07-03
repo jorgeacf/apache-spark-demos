@@ -1,16 +1,12 @@
 package com.jorgefigueiredo.job
 
-import org.apache.spark.{SparkConf, SparkContext}
+import com.jorgefigueiredo.SparkContextFactory
 
 object WordCountApplication {
 
   def main(args: Array[String]) {
 
-    val sparkConf = new SparkConf()
-    sparkConf.setAppName("WordCountApplication")
-    sparkConf.setMaster("local[*]")
-    sparkConf.set("spark.ui.showConsoleProgress", "false")
-    val sparkContext = new SparkContext(sparkConf)
+    val sparkContext = SparkContextFactory.getLocalContext()
 
     val textFile = sparkContext.textFile("input/text.txt")
     val counts = textFile
@@ -20,7 +16,9 @@ object WordCountApplication {
       .sortByKey(true)
       //.filter(item => item._1.contains("a"))
 
-    counts.saveAsTextFile("output")
+    //counts.saveAsTextFile("output")
+
+    counts.foreach(println)
 
   }
 

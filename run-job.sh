@@ -14,13 +14,15 @@ fi
 
 mvn clean package -DskipTests
 
-docker cp target/spark-1.0-SNAPSHOT-jar-with-dependencies.jar jfdocker-YARN:/
+docker cp target/spark-1.0-SNAPSHOT-jar-with-dependencies.jar spark:/
 
-docker cp input/. jfdocker-YARN:/input
+docker cp input/. hadoop-master:/input
 
-docker exec jfdocker-YARN hdfs dfs -put input/text.txt /user/root
+docker exec hadoop-master export HADOOP_CONF_DIR=/home/jorgeacf/Code/Github/dockerfiles/hadoop/config
 
-docker exec jfdocker-YARN \
+docker exec hadoop-master hdfs dfs -put input /user/root
+
+docker exec spark \
     spark-submit \
     --conf spark.driver.allowMultipleContexts=true \
     --class $1 \
@@ -31,17 +33,17 @@ docker exec jfdocker-YARN \
     --executor-cores 1 \
     spark-1.0-SNAPSHOT-jar-with-dependencies.jar
 
-docker exec jfdocker-YARN rm -r -f result
+#docker exec spark rm -r -f result
 
-docker exec jfdocker-YARN hdfs dfs -get /user/root/result
+#docker exec spark /hadoop/bin/hdfs dfs -get /user/root/result
 
-docker exec jfdocker-YARN hdfs dfs -rm -r /user/root/result
+#docker exec spark /hadoop/bin/hdfs dfs -rm -r /user/root/result
 
-sudo rm -r -f output
+#sudo rm -r -f output
 
-sudo mkdir output
+#sudo mkdir output
 
-sudo docker cp jfdocker-YARN:/result/. output
+#sudo docker cp spark:/result/. output
 
-sudo chown -R jorgeacf output
-sudo chown -R jorgeacf:jorgeacf output
+#sudo chown -R jorgeacf output
+#sudo chown -R jorgeacf:jorgeacf output

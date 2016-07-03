@@ -11,16 +11,20 @@ object RDDPartitionsApplication {
   def main(args: Array[String]) {
     val sparkContext = SparkContextFactory.getLocalContext()
     val numberOfItems = 100
-    val numberOfPartitions = 1
+    val numberOfPartitions = 10
     val input = ItemListFactory.get(numberOfItems)
     val partitions = sparkContext.parallelize(input, numberOfPartitions)
 
     val items = partitions
       .map(item => Array(item.id, item.name).mkString(", "))
 
-    val filePath = "output"
-    FileUtil.fullyDelete(new File(filePath))
-    items.saveAsTextFile(filePath)
-    println(partitions.count())
+    items.foreachPartition(p => p.foreach(println))
+
+    /*
+      val filePath = "output"
+      FileUtil.fullyDelete(new File(filePath))
+      items.saveAsTextFile(filePath)
+      println(partitions.count())
+    */
   }
 }
