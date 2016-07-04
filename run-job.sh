@@ -14,7 +14,6 @@ fi
 
 function exitScriptIfFail {
     status=$?
-
     if [ ${status} -ne 0 ];
     then
         echo "Exiting script with status [${status}]."
@@ -31,12 +30,23 @@ mvn clean package -DskipTests
 exitScriptIfFail
 
 docker cp target/spark-1.0-SNAPSHOT-jar-with-dependencies.jar spark:/
+exitScriptIfFail
+
+# REMOVE and add to the docker file
+docker exec hadoop-master /bin/bash -c "export HADOOP_CONF_DIR=/hadoop/etc/hadoop/"
+exitScriptIfFail
+
+docker exec hadoop-master hdfs dfs -rm -r -f /user/root/input
+exitScriptIfFail
+
+docker exec hadoop-master hdfs dfs -rm -r -f /user/root/output
+exitScriptIfFail
 
 docker cp input/. hadoop-master:/input
-
-docker exec hadoop-master /bin/bash -c "export HADOOP_CONF_DIR=/home/jorgeacf/Code/Github/dockerfiles/hadoop/config"
+exitScriptIfFail
 
 docker exec hadoop-master hdfs dfs -put input /user/root
+exitScriptIfFail
 
 docker exec spark \
     spark-submit \
@@ -48,18 +58,19 @@ docker exec spark \
     --executor-memory 1g \
     --executor-cores 1 \
     spark-1.0-SNAPSHOT-jar-with-dependencies.jar
+exitScriptIfFail
 
-#docker exec spark rm -r -f result
+docker exec hadoop-master rm -r -f output
+exitScriptIfFail
 
-#docker exec spark /hadoop/bin/hdfs dfs -get /user/root/result
+docker exec hadoop-master hdfs dfs -get /user/root/output output
+exitScriptIfFail
 
-#docker exec spark /hadoop/bin/hdfs dfs -rm -r /user/root/result
+rm -r -f output/*
+exitScriptIfFail
 
-#sudo rm -r -f output
+docker cp hadoop-master:/output/. output
+exitScriptIfFail
 
-#sudo mkdir output
-
-#sudo docker cp spark:/result/. output
-
-#sudo chown -R jorgeacf output
-#sudo chown -R jorgeacf:jorgeacf output
+chown -R jorgeacf output
+chown -R jorgeacf:jorgeacf output
