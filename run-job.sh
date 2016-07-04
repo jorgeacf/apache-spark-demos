@@ -9,16 +9,32 @@ if [ -z "$1" ]
 then
     echo "Missing SparkJob class name as first parameter"
     echo ""
-    exit
+    exit -1
 fi
 
+function exitScriptIfFail {
+    status=$?
+
+    if [ ${status} -ne 0 ];
+    then
+        echo "Exiting script with status [${status}]."
+        exit ${status}
+    fi
+}
+
+#touch /root/test 2> /dev/null
+
+hash=`find infrastructure -type f -exec md5sum {} \; | md5sum`
+echo ${hash}
+
 mvn clean package -DskipTests
+exitScriptIfFail
 
 docker cp target/spark-1.0-SNAPSHOT-jar-with-dependencies.jar spark:/
 
 docker cp input/. hadoop-master:/input
 
-docker exec hadoop-master export HADOOP_CONF_DIR=/home/jorgeacf/Code/Github/dockerfiles/hadoop/config
+docker exec hadoop-master /bin/bash -c "export HADOOP_CONF_DIR=/home/jorgeacf/Code/Github/dockerfiles/hadoop/config"
 
 docker exec hadoop-master hdfs dfs -put input /user/root
 
