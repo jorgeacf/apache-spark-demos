@@ -16,7 +16,7 @@ object WordCountApplication {
       .sortByKey(true)
       //.filter(item => item._1.contains("a"))
 
-    //counts.saveAsTextFile("output")
+    counts.saveAsTextFile("output")
 
     counts.foreach(println)
 
