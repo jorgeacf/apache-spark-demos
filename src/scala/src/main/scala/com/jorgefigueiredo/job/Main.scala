@@ -7,10 +7,6 @@ object Main {
 
   def main(args: Array[String]): Unit = {
 
-    println("------------ Starting ---------------")
-
-    "printenv" !
-
     val sparkConf = new SparkConf()
     sparkConf.setAppName("Spark Job")
     sparkConf.setMaster("local[*]")
