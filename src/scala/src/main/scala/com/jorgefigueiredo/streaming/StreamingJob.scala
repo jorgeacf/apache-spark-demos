@@ -30,7 +30,7 @@ object StreamingJob {
     })
     //wordCounts.saveAsTextFiles("result", "txt")
 
-    println("Starting streaming job...")
+    println("Starting streaming operators...")
     streamingContext.start()
     streamingContext.awaitTermination()
   }

@@ -1,4 +1,4 @@
-package com.jorgefigueiredo.job
+package com.jorgefigueiredo.operators
 
 import com.jorgefigueiredo.SparkContextFactory
 

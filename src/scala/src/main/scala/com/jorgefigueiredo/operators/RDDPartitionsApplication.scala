@@ -1,4 +1,4 @@
-package com.jorgefigueiredo.job
+package com.jorgefigueiredo.operators
 
 import java.io.File
 
