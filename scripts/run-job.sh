@@ -23,8 +23,10 @@ function exitScriptIfFail {
 
 #touch /root/test 2> /dev/null
 
-hash=`find infrastructure -type f -exec md5sum {} \; | md5sum`
-echo ${hash}
+#hash=`find infrastructure -type f -exec md5sum {} \; | md5sum`
+#echo ${hash}
+
+cd src/scala
 
 mvn clean package -DskipTests
 exitScriptIfFail
@@ -42,7 +44,7 @@ exitScriptIfFail
 docker exec hadoop-master hdfs dfs -rm -r -f /user/root/output
 exitScriptIfFail
 
-docker cp input/. hadoop-master:/input
+docker cp ../../input/. hadoop-master:/input
 exitScriptIfFail
 
 docker exec hadoop-master hdfs dfs -put input /user/root
@@ -52,7 +54,7 @@ docker exec spark \
     spark-submit \
     --conf spark.driver.allowMultipleContexts=true \
     --class $1 \
-    --master yarn-cluster \
+    --master yarn-client \
     --driver-memory 1g \
     --num-executors 4 \
     --executor-memory 1g \

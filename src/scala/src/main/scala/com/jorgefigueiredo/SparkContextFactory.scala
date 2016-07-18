@@ -8,11 +8,15 @@ object SparkContextFactory {
 
     val sparkConf = new SparkConf()
     sparkConf.setAppName("TestApplicationName")
-    sparkConf.setMaster("local[4]")
+    //sparkConf.setMaster("local[4]")
     sparkConf.set("spark.ui.showConsoleProgress", "false")
 
     val sparkContext = new SparkContext(sparkConf)
     sparkContext
+  }
+
+  def setMaster(sparkConf: SparkConf) : SparkConf = {
+    sparkConf.setMaster("local[4]")
   }
 
 }

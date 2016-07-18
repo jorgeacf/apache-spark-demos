@@ -9,7 +9,7 @@ object Main {
 
     val sparkConf = new SparkConf()
     sparkConf.setAppName("Spark Job")
-    sparkConf.setMaster("local[*]")
+    //sparkConf.setMaster("local[*]")
 
     val sparkContext = new SparkContext(sparkConf)
     val list = sparkContext.parallelize(1 to 1000, 1)
