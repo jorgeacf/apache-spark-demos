@@ -8,6 +8,16 @@ import org.scalatest.junit.JUnitRunner
 @RunWith(classOf[JUnitRunner])
 class ItemListFactoryTest extends FunSuite {
 
+  test("ItemListFactory get method returns a list of objects in one partition") {
+    val numberOfItems = 10
+    val items = ItemListFactory.get(numberOfItems)
+    val ids = items.map(item => item.id)
+
+    assertNotNull(items)
+    assertEquals(numberOfItems, items.length)
+    assertEquals(Range(0,items.length).reverse, ids)
+  }
+
   test("ItemListFactory get method returns more than one item") {
 
     val numberOfItems = 10

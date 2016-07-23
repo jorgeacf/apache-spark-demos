@@ -6,7 +6,7 @@ object WordCountApplication {
 
   def main(args: Array[String]) {
 
-    val sparkContext = SparkContextFactory.getLocalContext()
+    val sparkContext = SparkContextFactory.getContext()
 
     val textFile = sparkContext.textFile("input/text.txt")
     val counts = textFile

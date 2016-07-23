@@ -9,7 +9,7 @@ import org.apache.hadoop.fs.FileUtil
 object RDDPartitionsApplication {
 
   def main(args: Array[String]) {
-    val sparkContext = SparkContextFactory.getLocalContext()
+    val sparkContext = SparkContextFactory.getContext()
     val numberOfItems = 100
     val numberOfPartitions = 10
     val input = ItemListFactory.get(numberOfItems)
