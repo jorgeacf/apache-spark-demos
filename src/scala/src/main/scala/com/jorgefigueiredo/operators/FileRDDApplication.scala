@@ -6,7 +6,7 @@ object FileRDDApplication {
 
   def main(args: Array[String]) {
 
-    val sparkContext = SparkContextFactory.getLocalContext()
+    val sparkContext = SparkContextFactory.getContext()
     val countries = sparkContext.textFile("input/airports/countries.csv")
     //val airports = sparkContext.textFile("input/airports/airports.csv")
 

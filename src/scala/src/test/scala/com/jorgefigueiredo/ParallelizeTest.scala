@@ -4,17 +4,23 @@ import org.apache.spark.scheduler.SparkListener
 import org.apache.spark.{SparkConf, SparkContext}
 import org.junit.Assert._
 import org.junit.runner.RunWith
-import org.scalatest.FunSuite
+import org.scalatest.{BeforeAndAfter, FunSuite}
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class ParallelizeTest extends FunSuite {
+class ParallelizeTest extends FunSuite with BeforeAndAfter {
 
-  val sparkConf = new SparkConf()
-  sparkConf.setAppName("Spark Job")
-  sparkConf.setMaster("local[4]")
-  sparkConf.set("spark.driver.allowMultipleContexts", "true")
-  val sparkContext = new SparkContext(sparkConf)
+  var sparkContext: SparkContext = _
+
+  before {
+    sparkContext = SparkContextFactory.getContext()
+  }
+
+  after {
+    if(sparkContext != null) {
+      sparkContext.stop()
+    }
+  }
 
   test("Parallelize with 5 partitions") {
 
