@@ -4,7 +4,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 object SparkContextFactory {
 
-  def getContext() : SparkContext = {
+  def getContext : SparkContext = {
 
     val sparkConf = new SparkConf()
     sparkConf.setAppName("TestApplicationName")

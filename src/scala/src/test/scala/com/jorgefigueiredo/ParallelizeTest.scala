@@ -13,7 +13,7 @@ class ParallelizeTest extends FunSuite with BeforeAndAfter {
   var sparkContext: SparkContext = _
 
   before {
-    sparkContext = SparkContextFactory.getContext()
+    sparkContext = SparkContextFactory.getContext
   }
 
   after {

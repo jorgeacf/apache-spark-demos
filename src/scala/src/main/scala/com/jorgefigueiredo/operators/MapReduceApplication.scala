@@ -6,7 +6,7 @@ import com.jorgefigueiredo.data.ItemListFactory
 object MapReduceApplication {
 
   def main(args: Array[String]) {
-    val sparkContext = SparkContextFactory.getContext()
+    val sparkContext = SparkContextFactory.getContext
     val numberOfItems = 10
     val numberOfPartitions = 2
     val input = ItemListFactory.get(numberOfItems, numberOfPartitions)

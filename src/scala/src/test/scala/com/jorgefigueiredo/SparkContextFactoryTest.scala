@@ -11,7 +11,7 @@ class SparkContextFactoryTest extends FunSuite  {
 
   test("SparkContextFactory can return a SparkContext") {
 
-    val sparkContext = SparkContextFactory.getContext()
+    val sparkContext = SparkContextFactory.getContext
     assertNotNull(sparkContext)
     sparkContext.stop()
   }
