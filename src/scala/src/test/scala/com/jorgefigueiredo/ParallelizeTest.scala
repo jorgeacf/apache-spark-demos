@@ -10,14 +10,14 @@ import org.scalatest.junit.JUnitRunner
 @RunWith(classOf[JUnitRunner])
 class ParallelizeTest extends FunSuite with BeforeAndAfter {
 
-  var sparkContext: SparkContext = _
+  val sparkContext: SparkContext = SparkContextFactory.getContext
 
   before {
-    sparkContext = SparkContextFactory.getContext
+
   }
 
   after {
-    if(sparkContext != null) {
+    if(!sparkContext.isStopped) {
       sparkContext.stop()
     }
   }

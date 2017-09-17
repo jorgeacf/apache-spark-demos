@@ -19,7 +19,7 @@ object ItemListFactory {
         itemCount = 0
         partitionCount += 1
       }
-      items = new Item(index, s"Item $index", ("a".charAt(0) + partitionCount).asInstanceOf[Char] + "") :: items
+      items = Item(index, s"Item $index", ("a".charAt(0) + partitionCount).asInstanceOf[Char] + "") :: items
       itemCount += 1
     }
     items
