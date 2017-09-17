@@ -4,20 +4,20 @@ import org.apache.spark.scheduler.SparkListener
 import org.apache.spark.{SparkConf, SparkContext}
 import org.junit.Assert._
 import org.junit.runner.RunWith
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.{BeforeAndAfter, BeforeAndAfterAll, FunSuite}
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class ParallelizeTest extends FunSuite with BeforeAndAfter {
+class ParallelizeTest extends FunSuite with BeforeAndAfterAll {
 
   val sparkContext: SparkContext = SparkContextFactory.getContext
 
-  before {
+  override def beforeAll() {
 
   }
 
-  after {
-    if(!sparkContext.isStopped) {
+  override def afterAll {
+    if(sparkContext != null) {
       sparkContext.stop()
     }
   }
