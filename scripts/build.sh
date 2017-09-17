@@ -6,4 +6,6 @@ wget https://github.com/codacy/codacy-coverage-reporter/releases/download/2.0.0/
 
 mvn clean test cobertura:cobertura coveralls:report;
 
+ls
+
 java -cp codacy-coverage-reporter-2.0.0-assembly.jar com.codacy.CodacyCoverageReporter -l Java -r target/site/cobertura/coverage.xml
